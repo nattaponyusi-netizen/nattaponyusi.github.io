@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าร้านค้า</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+        /* CSS Base จากโค้ดตะกร้าสินค้าของคุณ */
+        body {
+            margin: 0;
+            font-family: 'Prompt', sans-serif;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        header {
+            background: #1e40af;
+            color: #fff;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .cart-btn {
+            background: #facc15;
+            color: #1e40af;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .cart-btn:hover {
+            background: #fbbf24;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #1e40af;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 5px;
+            color: #1e40af;
+            font-size: 1.5rem;
+        }
+
+        .product-card .price {
+            font-size: 1.2rem;
+            color: #ef4444;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .product-card .description {
+            color: #4b5563;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .buy-btn {
+            background: #10b981;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: #059669;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">ร้านค้าออนไลน์</div>
+        <nav>
+            <a href="Home.html">หน้าหลัก</a>
+            <a href="Start.html" class="btn-primary" style="opacity: 0.8;">หน้าร้าน</a>
+            <a href="basket.html" class="cart-btn">ตะกร้าสินค้า 🛒</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>✨ สินค้ามาใหม่ประจำสัปดาห์</h1>
+        <div class="products">
+            
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Smart+Watch+X1" alt="Smart Watch X1">
+                <h3>Smart Watch X1</h3>
+                <p class="description">นาฬิกาอัจฉริยะรุ่นใหม่ล่าสุด กันน้ำ กันฝุ่น ฟังก์ชันครบครัน</p>
+                <div class="price">฿1,850</div>
+                <button class="buy-btn" onclick="addToCart('Smart Watch X1', 1850, 'https://via.placeholder.com/80x80.png?text=SW+X1')">ซื้อเลย</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Wireless+Headphones" alt="Wireless Headphones">
+                <h3>หูฟังไร้สาย Pro</h3>
+                <p class="description">เสียงคมชัด เบสแน่น ไมโครโฟนคุณภาพสูง ใช้งานได้นาน 24 ชั่วโมง</p>
+                <div class="price">฿990</div>
+                <button class="buy-btn" onclick="addToCart('หูฟังไร้สาย Pro', 990, 'https://via.placeholder.com/80x80.png?text=HP+Pro')">ซื้อเลย</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Mini+Projector" alt="Mini Projector">
+                <h3>มินิโปรเจคเตอร์</h3>
+                <p class="description">ขนาดเล็กพกพาง่าย ความละเอียดสูง สร้างโรงหนังส่วนตัวได้ทุกที่</p>
+                <div class="price">฿4,200</div>
+                <button class="buy-btn" onclick="addToCart('มินิโปรเจคเตอร์', 4200, 'https://via.placeholder.com/80x80.png?text=Mini+PJ')">ซื้อเลย</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x200.png?text=Gaming+Mouse+RGB" alt="Gaming Mouse RGB">
+                <h3>เมาส์เกมมิ่ง RGB</h3>
+                <p class="description">ตอบสนองเร็วพิเศษ DPI สูงสุด 16000 พร้อมไฟ RGB สวยงาม</p>
+                <div class="price">฿750</div>
+                <button class="buy-btn" onclick="addToCart('เมาส์เกมมิ่ง RGB', 750, 'https://via.placeholder.com/80x80.png?text=GM+RGB')">ซื้อเลย</button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        function addToCart(productName, price, imageUrl) {
+            // 1. ดึงข้อมูลตะกร้าสินค้าปัจจุบันจาก Local Storage
+            // ถ้าไม่มี ให้เริ่มด้วยอาร์เรย์ว่าง
+            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+            // 2. ตรวจสอบว่าสินค้ามีอยู่แล้วหรือไม่
+            const existingItem = cart.find(item => item.name === productName);
+
+            if (existingItem) {
+                // ถ้ามีอยู่แล้ว: เพิ่มจำนวนขึ้น 1
+                existingItem.quantity += 1;
+            } else {
+                // ถ้ายังไม่มี: เพิ่มสินค้าใหม่เข้าไป
+                const newItem = {
+                    name: productName,
+                    price: price,
+                    quantity: 1,
+                    image: imageUrl
+                };
+                cart.push(newItem);
+            }
+            
+            // 3. บันทึกตะกร้าสินค้าที่อัปเดตแล้วกลับเข้าไปใน Local Storage
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+
+            // 4. แจ้งเตือนและเปลี่ยนหน้า
+            alert(`✅ เพิ่ม "${productName}" ลงในตะกร้าสินค้าแล้ว!`);
+            window.location.href = 'basket.html'; 
+        }
+    </script>
+</body>
+</html>

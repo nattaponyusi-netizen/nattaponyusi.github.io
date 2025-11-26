@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตะกร้าสินค้า</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
+    /* CSS เดิมของคุณ */
+    body {
+        margin: 0;
+        font-family: 'Prompt', sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+    }
+
+    header {
+        background: #1e40af;
+        color: #fff;
+        padding: 16px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: bold;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #1e40af;
+    }
+
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .cart-table th, .cart-table td {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background: #2563eb;
+        color: #fff;
+    }
+
+    .cart-table td img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+    }
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+        padding: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .remove-btn {
+        background: #ef4444;
+        color: #fff;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .remove-btn:hover {
+        background: #dc2626;
+    }
+
+    /* สไตล์สำหรับปุ่มล้างทั้งหมด */
+    .clear-cart-btn {
+        background: #9ca3af;
+        color: #fff;
+        padding: 12px 28px;
+        border-radius: 6px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        float: left; /* จัดชิดซ้าย */
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+    .clear-cart-btn:hover {
+        background: #6b7280;
+    }
+    
+    .total {
+        text-align: right;
+        margin-top: 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .checkout-btn {
+        background: #facc15;
+        color: #1e40af;
+        padding: 12px 28px;
+        border-radius: 6px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        display: block; 
+        width: fit-content; 
+        margin-left: auto; 
+        margin-top: 20px;
+        transition: background 0.3s;
+    }
+
+    .checkout-btn:hover {
+        background: #fbbf24;
+    }
+
+    @media (max-width: 768px) {
+        .cart-table th, .cart-table td {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .quantity-input {
+            width: 40px;
+        }
+    }
+    /* สไตล์สำหรับ Popup (Modal) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 30px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .success-icon {
+        color: #10b981;
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    .empty-cart {
+        text-align: center;
+        padding: 50px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        color: #ef4444;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">ร้านค้าออนไลน์</div>
+    <nav>
+        <a href="Home.html">หน้าหลัก</a>
+        <a href="Start.html" class="btn-primary">หน้าร้าน</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>ตะกร้าสินค้า</h1>
+    <table class="cart-table" id="cart-table">
+        <thead>
+            <tr>
+                <th>สินค้า</th>
+                <th>ชื่อสินค้า</th>
+                <th>ราคา</th>
+                <th>จำนวน</th>
+                <th>รวม</th>
+                <th>ลบ</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            </tbody>
+    </table>
+    
+    <div class="empty-cart" id="empty-message" style="display:none;">
+        🛒 ตะกร้าสินค้าว่างเปล่า! กรุณาไปที่หน้าร้านเพื่อเลือกซื้อสินค้า
+    </div>
+
+    <button class="clear-cart-btn" onclick="clearCart()">ล้างตะกร้าทั้งหมด</button>
+
+    <div class="total">
+        ราคารวม: <span id="grand-total">฿0</span>
+    </div>
+    
+    <button class="checkout-btn" onclick="placeOrder()">สั่งซื้อ / ชำระเงิน</button>
+</div>
+
+<div id="successModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="success-icon">✅</div>
+        <h2>สั่งซื้อสำเร็จ!</h2>
+        <p>ขอบคุณสำหรับการสั่งซื้อสินค้าของคุณ</p>
+        <p>ยอดรวมที่ชำระ: <strong id="paid-total">฿0</strong></p>
+        <button class="remove-btn" onclick="closeModal()" style="margin-top: 15px; background: #2563eb;">ปิด</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', loadCart);
+
+    // 1. ฟังก์ชันหลัก: โหลดข้อมูลจาก Local Storage และสร้างตาราง
+    function loadCart() {
+        // ดึงข้อมูลจาก Local Storage
+        const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const cartItemsBody = document.getElementById('cart-items');
+        const emptyMessage = document.getElementById('empty-message');
+        const checkoutBtn = document.querySelector('.checkout-btn');
+        const clearBtn = document.querySelector('.clear-cart-btn'); // อ้างอิงถึงปุ่มล้าง
+
+        cartItemsBody.innerHTML = ''; // ล้างเนื้อหาเก่าก่อน
+
+        if (cart.length === 0) {
+            emptyMessage.style.display = 'block';
+            checkoutBtn.style.display = 'none';
+            clearBtn.style.display = 'none'; // ซ่อนปุ่มล้างเมื่อตะกร้าว่าง
+        } else {
+            emptyMessage.style.display = 'none';
+            checkoutBtn.style.display = 'block';
+            clearBtn.style.display = 'block'; // แสดงปุ่มล้างเมื่อมีสินค้า
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                const row = document.createElement('tr');
+                row.setAttribute('data-index', index); 
+                
+                row.innerHTML = `
+                    <td><img src="${item.image}" alt="${item.name}"></td>
+                    <td class="product-name">${item.name}</td>
+                    <td class="item-price">฿${item.price.toLocaleString('th-TH')}</td>
+                    <td><input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)"></td>
+                    <td class="item-total">฿${itemTotal.toLocaleString('th-TH')}</td>
+                    <td><button class="remove-btn" onclick="removeItem(${index})">ลบ</button></td>
+                `;
+                cartItemsBody.appendChild(row);
+            });
+        }
+        calculateGrandTotal(cart);
+    }
+    
+    // 2. ฟังก์ชันอัปเดตจำนวนสินค้า (เมื่อเปลี่ยน input)
+    function updateQuantity(index, newQuantity) {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const quantity = parseInt(newQuantity);
+        
+        if (quantity <= 0) {
+            removeItem(index);
+            return;
+        }
+        
+        if (cart[index]) {
+            cart[index].quantity = quantity;
+            localStorage.setItem('cartItems', JSON.stringify(cart));
+            loadCart(); 
+        }
+    }
+
+    // 3. ฟังก์ชันสำหรับการลบสินค้า (ทีละรายการ)
+    function removeItem(index) {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+        if (cart[index]) {
+            const productName = cart[index].name;
+            if (confirm(`คุณต้องการลบ "${productName}" ออกจากตะกร้าสินค้าหรือไม่?`)) {
+                cart.splice(index, 1); 
+                localStorage.setItem('cartItems', JSON.stringify(cart));
+                loadCart(); 
+            }
+        }
+    }
+
+    // 4. ฟังก์ชันสำหรับการคำนวณยอดรวมทั้งหมด
+    function calculateGrandTotal(cart) {
+        let grandTotal = 0;
+        
+        if (cart.length > 0) {
+            grandTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        }
+
+        document.getElementById('grand-total').textContent = `฿${grandTotal.toLocaleString('th-TH')}`;
+    }
+
+    // 5. ฟังก์ชันใหม่: ล้างตะกร้าสินค้าทั้งหมด
+    function clearCart() {
+        if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบสินค้าทั้งหมดในตะกร้า?")) {
+            localStorage.removeItem('cartItems'); // ลบข้อมูลทั้งหมด
+            loadCart(); // โหลดตะกร้าใหม่ (จะแสดงว่าว่างเปล่า)
+        }
+    }
+
+
+    // 6. ฟังก์ชันสำหรับสั่งซื้อสำเร็จ (Place Order)
+    function placeOrder() {
+        const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        
+        if (cart.length === 0) {
+            alert('กรุณาเพิ่มสินค้าลงในตะกร้าก่อนทำการสั่งซื้อ');
+            return; 
+        }
+
+        const finalTotal = document.getElementById('grand-total').textContent;
+        
+        document.getElementById('paid-total').textContent = finalTotal;
+
+        document.getElementById('successModal').style.display = 'block';
+        
+        localStorage.removeItem('cartItems');
+        loadCart();
+    }
+
+    // 7. ฟังก์ชันสำหรับปิด Popup
+    function closeModal() {
+        document.getElementById('successModal').style.display = 'none';
+    }
+
+    // ปิด Modal เมื่อผู้ใช้คลิกนอก Modal
+    window.onclick = function(event) {
+        const modal = document.getElementById('successModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+</body>
+</html>
